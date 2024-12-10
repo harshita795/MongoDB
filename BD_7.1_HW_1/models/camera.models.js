@@ -10,7 +10,7 @@ const cameraSchema = new mongoose.Schema({
   cameraInfo: String,
   ActualPrice: Number,
   DiscountedPrice: Number,
-  offPercentage: String,
+  offPercentage: Number,
   isFreeDelivery: Boolean,
   isLowestPrice: Boolean,
   cameraLeftInStock: Number,

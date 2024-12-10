@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   totalReviews: Number,
   ActualPrice: Number,
   DiscountedPrice: Number,
-  offPercentage: String,
+  offPercentage: Number,
   availableOffers: String,
   warrantyInfo: String,
   variant: [
