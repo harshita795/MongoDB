@@ -1,0 +1,112 @@
+[
+  {
+    "fullName": "Alice Johnson",
+    "username": "alice_j",
+    "bio": "Passionate software engineer exploring new technologies.",
+    "profilePicUrl": "https://example.com/alice_profile.jpg",
+    "followingCount": 300,
+    "followerCount": 1500,
+    "companyName": "TechCo",
+    "location": "San Francisco, CA",
+    "portfolioUrl": "https://alice.portfolio.com"
+  },
+  {
+    "fullName": "Bob Smith",
+    "username": "bob_dev",
+    "bio": "Full-stack developer with a focus on web applications.",
+    "profilePicUrl": "https://example.com/bob_profile.jpg",
+    "followingCount": 250,
+    "followerCount": 1200,
+    "companyName": "StartupX",
+    "location": "New York, NY",
+    "portfolioUrl": "https://bob.portfolio.com"
+  },
+  {
+    "fullName": "Eva Thompson",
+    "username": "eva_designs",
+    "bio": "Graphic designer passionate about minimalist aesthetics.",
+    "profilePicUrl": "https://example.com/eva_profile.jpg",
+    "followingCount": 180,
+    "followerCount": 900,
+    "companyName": "Creative Studio",
+    "location": "Los Angeles, CA",
+    "portfolioUrl": "https://eva.portfolio.com"
+  },
+  {
+    "fullName": "Max Turner",
+    "username": "max_visuals",
+    "bio": "UI/UX designer specializing in user-centered design.",
+    "profilePicUrl": "https://example.com/max_profile.jpg",
+    "followingCount": 220,
+    "followerCount": 1100,
+    "companyName": "DesignLab",
+    "location": "Seattle, WA",
+    "portfolioUrl": "https://max.portfolio.com"
+  },
+  {
+    "fullName": "Sarah Chang",
+    "username": "sarah_entrepreneur",
+    "bio": "Founder of a successful tech startup.",
+    "profilePicUrl": "https://example.com/sarah_profile.jpg",
+    "followingCount": 400,
+    "followerCount": 2500,
+    "companyName": "TechStartup Inc.",
+    "location": "Austin, TX",
+    "portfolioUrl": "https://sarah.portfolio.com"
+  },
+  {
+    "fullName": "John Davis",
+    "username": "jdavis_innovate",
+    "bio": "Serial entrepreneur and venture capitalist.",
+    "profilePicUrl": "https://example.com/john_profile.jpg",
+    "followingCount": 350,
+    "followerCount": 1800,
+    "companyName": "Innovation Ventures",
+    "location": "Boston, MA",
+    "portfolioUrl": "https://john.portfolio.com"
+  },
+  {
+    "fullName": "Lily Martinez",
+    "username": "lily_shots",
+    "bio": "Professional photographer capturing memorable moments.",
+    "profilePicUrl": "https://example.com/lily_profile.jpg",
+    "followingCount": 150,
+    "followerCount": 800,
+    "companyName": "Lily Photography",
+    "location": "Miami, FL",
+    "portfolioUrl": "https://lily.portfolio.com"
+  },
+  {
+    "fullName": "Chris Adams",
+    "username": "chris_snapshots",
+    "bio": "Nature and wildlife photographer exploring the world.",
+    "profilePicUrl": "https://example.com/chris_profile.jpg",
+    "followingCount": 200,
+    "followerCount": 1000,
+    "companyName": "WildLens Studios",
+    "location": "Denver, CO",
+    "portfolioUrl": "https://chris.portfolio.com"
+  },
+  {
+    "fullName": "Sophia Lee",
+    "username": "sophia_music",
+    "bio": "Singer-songwriter blending pop and indie genres.",
+    "profilePicUrl": "https://example.com/sophia_profile.jpg",
+    "followingCount": 280,
+    "followerCount": 1500,
+    "companyName": "IndieMusic Records",
+    "location": "Portland, OR",
+    "portfolioUrl": "https://sophia.portfolio.com"
+  },
+  {
+    "fullName": "David Wright",
+    "username": "dave_musician",
+    "bio": "Guitarist and composer exploring jazz fusion.",
+    "profilePicUrl": "https://example.com/dave_profile.jpg",
+    "followingCount": 230,
+    "followerCount": 1200,
+    "companyName": "Harmony Studios",
+    "location": "Chicago, IL",
+    "portfolioUrl": "https://dave.portfolio.com"
+  }
+]
