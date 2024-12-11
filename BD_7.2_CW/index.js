@@ -57,4 +57,26 @@ async function createMovie(newMovie) {
     throw error;
   }
 }
-createMovie(newMovie);
+// createMovie(newMovie);
+
+// to get all movies from the database
+async function readAllMovies() {
+  try {
+    const allMovies = await Movie.find();
+    console.log(allMovies);
+  } catch (error) {
+    console.error(error);
+  }
+}
+// readAllMovies();
+
+// to get a movie by director name
+async function getMovieByDirector(directorName) {
+  try {
+    const movieByDirector = await Movie.find({ director: directorName });
+    console.log(movieByDirector);
+  } catch (error) {
+    console.error(error);
+  }
+}
+getMovieByDirector("Aditya Chopra");
