@@ -42,4 +42,29 @@ async function updatedHotelByPhoneNumber(hotelPhoneNumber, dataToUpdate) {
     console.error("Error in updating hotel data", error);
   }
 }
-updatedHotelByPhoneNumber("+1299655890", { phoneNumber: "+1997687392" });
+// updatedHotelByPhoneNumber("+1299655890", { phoneNumber: "+1997687392" });
+
+// delete a hotel by its id
+async function deleteHotelById(hotelId) {
+  try {
+    const deletedHotel = await Hotel.findByIdAndDelete(hotelId);
+    console.log("This hotel was deleted", deletedHotel);
+  } catch (error) {
+    console.error("Error in deleting hotel", error);
+  }
+}
+
+// deleteHotelById("67585d79b1de7c9f7c8e78ed");
+
+//  delete a hotel by its phone number
+async function deleteHotelByPhoneNumber(hotelPhoneNumber) {
+  try {
+    const deletedHotel = await Hotel.findOneAndDelete({
+      phoneNumber: hotelPhoneNumber,
+    });
+    console.log("This hotel was deleted", deletedHotel);
+  } catch (error) {
+    console.error("Error in deleting hotel", error);
+  }
+}
+deleteHotelByPhoneNumber("+1234555890");
