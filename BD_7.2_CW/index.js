@@ -109,4 +109,27 @@ async function updateMovieDetails(movieTitle, dataToUpdate) {
     console.error("Error in updating the movie data", error);
   }
 }
-updateMovieDetails("Dilwale Dulhania Le Jayenge", { releaseYear: 1996 });
+// updateMovieDetails("Dilwale Dulhania Le Jayenge", { releaseYear: 1996 });
+
+//  delete a movie by id
+async function deleteMovieById(movieId) {
+  try {
+    const deletedMovie = await Movie.findByIdAndDelete(movieId);
+    console.log(`Movie deleted by successfully id : ${movieId}`);
+  } catch (error) {
+    console.error("Error in deleting the movie", error);
+  }
+}
+// deleteMovieById("6758084ab7e0cac9dda141d3");
+
+// delete a movie by title
+
+async function deleteMovieByTitle(movieTitle) {
+  try {
+    const deletedMovie = await Movie.findOneAndDelete({ title: movieTitle });
+    console.log(`The movie was deleted`, deletedMovie);
+  } catch (error) {
+    console.error("Error in deleting the movie", error);
+  }
+}
+deleteMovieByTitle("PK");
