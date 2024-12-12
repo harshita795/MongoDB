@@ -48,6 +48,30 @@ async function updateRestaurantByPhoneNumber(
   }
 }
 
-updateRestaurantByPhoneNumber("1288997392", {
-  isDeliveryAvailable: true,
-});
+// updateRestaurantByPhoneNumber("1288997392", {
+//   isDeliveryAvailable: true,
+// });
+
+// deleting a reataurant by id
+async function deletingRestaurantById(restaurantId) {
+  try {
+    const deletedRestaurant = await Restaurant.findByIdAndDelete(restaurantId);
+    console.log(`This restaurant was deleted:`, deletedRestaurant);
+  } catch (error) {
+    console.error("Error in deleting the restaurant", error);
+  }
+}
+// deletingRestaurantById("675855d12c9ac26cc4873977");
+
+//  deleting a restaurant by name
+async function deletingRestaurantByNmae(restaurantName) {
+  try {
+    const deletedRestaurant = await Restaurant.findOneAndDelete({
+      name: restaurantName,
+    });
+    console.log(`This restaurant was deleted:`, deletedRestaurant);
+  } catch (error) {
+    console.error("Error in deleting the restaurant", error);
+  }
+}
+deletingRestaurantByNmae("Som Sarovar");
