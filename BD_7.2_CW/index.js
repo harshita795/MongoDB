@@ -79,4 +79,34 @@ async function getMovieByDirector(directorName) {
     console.error(error);
   }
 }
-getMovieByDirector("Aditya Chopra");
+// getMovieByDirector("Aditya Chopra");
+
+// find the movie by its id and update the movie
+
+async function updateMovie(movieId, dataToUpdate) {
+  try {
+    const updatedMovie = await Movie.findByIdAndUpdate(movieId, dataToUpdate, {
+      new: true,
+    });
+    console.log(updatedMovie);
+  } catch (error) {
+    console.error("Error in updating the movie data", error);
+  }
+}
+// updateMovie("6758084ab7e0cac9dda141d2", { rating: 8.5 });
+
+// find one data and update its value
+
+async function updateMovieDetails(movieTitle, dataToUpdate) {
+  try {
+    const updatedMovie = await Movie.findOneAndUpdate(
+      { title: movieTitle },
+      dataToUpdate,
+      { new: true }
+    );
+    console.log(updatedMovie);
+  } catch (error) {
+    console.error("Error in updating the movie data", error);
+  }
+}
+updateMovieDetails("Dilwale Dulhania Le Jayenge", { releaseYear: 1996 });
