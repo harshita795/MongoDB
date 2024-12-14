@@ -1,6 +1,10 @@
+const express = require("express");
+const app = express();
 const { initializeDatabase } = require("./db/db.connect.js");
 const Restaurant = require("./models/restaurant.models.js");
 initializeDatabase();
+
+app.use(express.json());
 
 // const newRestaurant = {
 //   name: "Somi",
@@ -56,24 +60,44 @@ async function createRestaurant(newRestaurant) {
 async function readAllRestaurant() {
   try {
     const allRestaurants = await Restaurant.find();
-    console.log(allRestaurants);
+    return allRestaurants;
   } catch (error) {
     console.error(error);
   }
 }
 
-// readAllRestaurant();
+app.get("/restaurants", async (req, res) => {
+  try {
+    const allRestaurants = await readAllRestaurant();
+    return res.status(200).json({
+      message: "All restaurants fetched successfully.",
+      allRestaurants,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Failed to get all restaurants", error });
+  }
+});
 
 async function getRestaurantByName(restaurantName) {
   try {
     const restaurantByName = await Restaurant.find({ name: restaurantName });
-    console.log(restaurantByName);
+    return restaurantByName;
   } catch (error) {
     console.error(error);
   }
 }
 
-// getRestaurantByName("Cha Cha");
+app.get("/restaurants/:restaurantName", async (req, res) => {
+  try {
+    const restaurantName = req.params.restaurantName;
+    const response = await getRestaurantByName(restaurantName);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get restaurants", error });
+  }
+});
 
 async function getRestaurantByReservationNeeded() {
   try {
@@ -86,8 +110,6 @@ async function getRestaurantByReservationNeeded() {
   }
 }
 
-// getRestaurantByReservationNeeded();
-
 async function getRestaurantByDeliveryAvailable() {
   try {
     const restaurantByDeliveryAvailable = await Restaurant.find({
@@ -99,27 +121,67 @@ async function getRestaurantByDeliveryAvailable() {
   }
 }
 
-// getRestaurantByDeliveryAvailable();
-
 async function getRestaurantByPhoneNumber(phoneNumber) {
   try {
     const restaurantByPhoneNumber = await Restaurant.find({
       phoneNumber: phoneNumber,
     });
-    console.log(restaurantByPhoneNumber);
+    return restaurantByPhoneNumber;
   } catch (error) {
     console.error(error);
   }
 }
-// getRestaurantByPhoneNumber(1288997392);
+
+app.get("/restaurants/directory/:phoneNumber", async (req, res) => {
+  try {
+    const phoneNumber = req.params.phoneNumber;
+    const response = await getRestaurantByPhoneNumber(phoneNumber);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get restaurants", error });
+  }
+});
 
 async function getRestaurantByCuisine(cuisine) {
   try {
     const restaurantByCuisine = await Restaurant.find({ cuisine: cuisine });
-    console.log(restaurantByCuisine);
+    return restaurantByCuisine;
   } catch (error) {
     console.error(error);
   }
 }
 
-getRestaurantByCuisine("Italian");
+app.get("/restaurants/cuisine/:cuisineName", async (req, res) => {
+  try {
+    const cuisineName = req.params.cuisineName;
+    const response = await getRestaurantByCuisine(cuisineName);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get restaurants", error });
+  }
+});
+
+async function getRestaurantByLocation(location) {
+  try {
+    const restaurantByLocation = await Restaurant.find({
+      location: location,
+    });
+    return restaurantByLocation;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+app.get("/restaurants/location/:restaurantLocation", async (req, res) => {
+  try {
+    const restaurantLocation = req.params.restaurantLocation;
+    const response = await getRestaurantByLocation(restaurantLocation);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get restaurants", error });
+  }
+});
+
+app.listen(3000, () => {
+  console.log(`Server is running at port 3000`);
+});

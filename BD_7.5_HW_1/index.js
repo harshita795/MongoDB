@@ -1,6 +1,10 @@
+const express = require("express");
+const app = express();
 const { initializeDatabase } = require("./db/db.connect.js");
 const Restaurant = require("./models/restaurant.models.js");
 initializeDatabase();
+
+app.use(express.json());
 
 async function updateRestaurantById(restaurantId, dataToUpdate) {
   try {
@@ -9,13 +13,26 @@ async function updateRestaurantById(restaurantId, dataToUpdate) {
       dataToUpdate,
       { new: true }
     );
-    console.log(updatedRestaurant);
+    return updatedRestaurant;
   } catch (error) {
     console.error("Error in updating the restaurant data", error);
   }
 }
 
-// updateRestaurantById("67594003c41df416f5b572dd", { rating: 4.1 });
+app.post("/restaurants/update/:restaurantId", async (req, res) => {
+  try {
+    const restaurantId = req.params.restaurantId.trim();
+    const updatedData = req.body;
+    const response = await updateRestaurantById(restaurantId, updatedData);
+    return res
+      .status(200)
+      .json({ message: "Restaurant updated successfully", response });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Failed to update the restaurant", error });
+  }
+});
 
 async function updateRestaurantByName(restaurantName, dataToUpdate) {
   try {
@@ -56,12 +73,25 @@ async function updateRestaurantByPhoneNumber(
 async function deletingRestaurantById(restaurantId) {
   try {
     const deletedRestaurant = await Restaurant.findByIdAndDelete(restaurantId);
-    console.log(`This restaurant was deleted:`, deletedRestaurant);
+    return deletedRestaurant;
   } catch (error) {
     console.error("Error in deleting the restaurant", error);
   }
 }
-// deletingRestaurantById("675855d12c9ac26cc4873977");
+
+app.post("/restaurants/delete/:restaurantId", async (req, res) => {
+  try {
+    const restaurantId = req.params.restaurantId.trim();
+    const response = await deletingRestaurantById(restaurantId);
+    return res
+      .status(200)
+      .json({ message: "Restaurant deleted successfully.", response });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Failed to delete the restaurant", error });
+  }
+});
 
 //  deleting a restaurant by name
 async function deletingRestaurantByNmae(restaurantName) {
@@ -74,4 +104,8 @@ async function deletingRestaurantByNmae(restaurantName) {
     console.error("Error in deleting the restaurant", error);
   }
 }
-deletingRestaurantByNmae("Som Sarovar");
+// deletingRestaurantByNmae("Som Sarovar");
+
+app.listen(3000, () => {
+  console.log(`Server is running at port 3000`);
+});
