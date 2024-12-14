@@ -3,6 +3,8 @@ const Post = require("./models/post.models.js");
 const User = require("./models/user.models.js");
 const Author = require("./models/author.models.js");
 const Book = require("./models/book.models.js");
+const Employee = require("./models/employee.models.js");
+const Department = require("./models/department.models.js");
 initializeDatabase();
 
 const userData = {
@@ -85,3 +87,44 @@ const getAllBooks = async () => {
   }
 };
 // getAllBooks();
+
+let departmentData = {
+  name: "HR",
+  location: "Bangalore",
+};
+
+const addDepartment = async () => {
+  try {
+    const newDepartment = new Department(departmentData);
+    await newDepartment.save();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+// addDepartment();
+
+let employeeData = {
+  name: "Johnny",
+  email: "jonny@gmail.com",
+  department: "675d44db325452dfefa5cb23",
+};
+
+const addEmployee = async () => {
+  try {
+    const newEmployee = await Employee(employeeData);
+    await newEmployee.save();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+// addEmployee();
+
+const getAllEmployees = async () => {
+  try {
+    const allEmployees = await Employee.find().populate("department");
+    console.log("All Employees:", allEmployees);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+getAllEmployees();
