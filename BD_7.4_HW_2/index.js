@@ -1,6 +1,10 @@
+const express = require("express");
+const app = express();
 const { initializeDatabase } = require("./db/db.connect.js");
 const Hotel = require("./models/hotel.models.js");
 initializeDatabase();
+
+app.use(express.json());
 
 // const newHotel = {
 //   name: "Lake View",
@@ -69,22 +73,40 @@ async function createHotel(newHotel) {
 async function readAllHotels() {
   try {
     const allHotels = await Hotel.find();
-    console.log(allHotels);
+    return allHotels;
   } catch (error) {
     console.error(error);
   }
 }
-// readAllHotels();
 
+app.get("/hotels", async (req, res) => {
+  try {
+    const hotels = await readAllHotels();
+    return res
+      .status(200)
+      .json({ message: "All the hotels fetched successfully", hotels });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get the hotels", error });
+  }
+});
 async function getHotelByName(hotelName) {
   try {
     const hotelByName = await Hotel.find({ name: hotelName });
-    console.log(hotelByName);
+    return hotelByName;
   } catch (error) {
     console.error(error);
   }
 }
-// getHotelByName("Lake View");
+
+app.get("/hotels/:hotelName", async (req, res) => {
+  try {
+    const hotelName = req.params.hotelName;
+    const response = await getHotelByName(hotelName);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get the hotels", error });
+  }
+});
 
 async function getByParkingAvailable() {
   try {
@@ -113,13 +135,21 @@ async function getByRestaurantAvailable() {
 async function getHotelByCategory(category) {
   try {
     const hotelByCategory = await Hotel.find({ category: category });
-    console.log(hotelByCategory);
+    return hotelByCategory;
   } catch (error) {
     console.error(error);
   }
 }
 
-// getHotelByCategory("Mid-Range");
+app.get("/hotels/category/:hotelCategory", async (req, res) => {
+  try {
+    const hotelCategory = req.params.hotelCategory;
+    const response = await getHotelByCategory(hotelCategory);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get the hotels", error });
+  }
+});
 
 async function getHotelByPriceRange(priceRange) {
   try {
@@ -135,20 +165,41 @@ async function getHotelByPriceRange(priceRange) {
 async function getHotelByRating(rating) {
   try {
     const hotelByRating = await Hotel.find({ rating: rating });
-    console.log(hotelByRating);
+    return hotelByRating;
   } catch (error) {
     console.error(error);
   }
 }
 
-// getHotelByRating(4);
+app.get("/hotels/rating/:hotelRating", async (req, res) => {
+  try {
+    const hotelRating = req.params.hotelRating;
+    const response = await getHotelByRating(hotelRating);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get the hotels", error });
+  }
+});
 
 async function getHotelByPhoneNumber(phoneNumber) {
   try {
     const hotelByPhoneNumber = await Hotel.find({ phoneNumber: phoneNumber });
-    console.log(hotelByPhoneNumber);
+    return hotelByPhoneNumber;
   } catch (error) {
     console.error(error);
   }
 }
-getHotelByPhoneNumber("+1299655890");
+
+app.get("/hotels/directory/:phoneNumber", async (req, res) => {
+  try {
+    const phoneNumber = req.params.phoneNumber;
+    const response = await getHotelByPhoneNumber(phoneNumber);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to get the hotels", error });
+  }
+});
+
+app.listen(3000, () => {
+  console.log(`Server is running at port 3000`);
+});

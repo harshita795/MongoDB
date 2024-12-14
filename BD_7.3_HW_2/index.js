@@ -1,6 +1,10 @@
+const express = require("express");
+const app = express();
 const { initializeDatabase } = require("./db/db.connect.js");
 const Hotel = require("./models/hotel.models.js");
 initializeDatabase();
+
+app.use(express.json());
 
 const newHotel = {
   name: "New Hotel",
@@ -29,10 +33,24 @@ async function createHotel(newHotel) {
   try {
     const hotel = new Hotel(newHotel);
     const savedHotel = await hotel.save();
-    console.log(savedHotel);
+    return savedHotel;
   } catch (error) {
     throw error;
   }
 }
 
-createHotel(newHotel);
+app.post("/hotels", async (req, res) => {
+  try {
+    const hotels = await createHotel(req.body);
+    return res
+      .status(201)
+      .json({ message: "Hotel ceated successfully.", hotels });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to create the hotel", error });
+  }
+});
+
+// createHotel(newHotel);
+app.listen(3000, () => {
+  console.log(`Server is running at port 3000`);
+});

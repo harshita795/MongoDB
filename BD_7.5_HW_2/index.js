@@ -1,19 +1,34 @@
+const express = require("express");
+const app = express();
 const { initializeDatabase } = require("./db/db.connect.js");
 const Hotel = require("./models/hotel.models.js");
 initializeDatabase();
+
+app.use(express.json());
 
 async function updateHotelById(hotelId, dataToUpdate) {
   try {
     const updatedHotel = await Hotel.findByIdAndUpdate(hotelId, dataToUpdate, {
       new: true,
     });
-    console.log(updatedHotel);
+    return updatedHotel;
   } catch (error) {
     console.error("Error in updating hotel data", error);
   }
 }
 
-// updateHotelById("67594b71b9d91782e154c2a1", { checkOutTime: "11:00 AM" });
+app.post("/hotels/update/:hotelId", async (req, res) => {
+  try {
+    const hotelId = req.params.hotelId;
+    const updatedData = req.body;
+    const response = await updateHotelById(hotelId, updatedData);
+    return res
+      .status(200)
+      .json({ message: "Hotel updated successfully.", response });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to update the hotel", error });
+  }
+});
 
 async function updateHotelByName(hotelName, dataToUpdate) {
   try {
@@ -48,13 +63,23 @@ async function updatedHotelByPhoneNumber(hotelPhoneNumber, dataToUpdate) {
 async function deleteHotelById(hotelId) {
   try {
     const deletedHotel = await Hotel.findByIdAndDelete(hotelId);
-    console.log("This hotel was deleted", deletedHotel);
+    return deletedHotel;
   } catch (error) {
     console.error("Error in deleting hotel", error);
   }
 }
 
-// deleteHotelById("67585d79b1de7c9f7c8e78ed");
+app.post("/hotels/:hotelId", async (req, res) => {
+  try {
+    const hotelId = req.params.hotelId;
+    const response = await deleteHotelById(hotelId);
+    return res
+      .status(200)
+      .json({ message: "Hotel deleted successfully", response });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to delete the hotel", error });
+  }
+});
 
 //  delete a hotel by its phone number
 async function deleteHotelByPhoneNumber(hotelPhoneNumber) {
@@ -67,4 +92,8 @@ async function deleteHotelByPhoneNumber(hotelPhoneNumber) {
     console.error("Error in deleting hotel", error);
   }
 }
-deleteHotelByPhoneNumber("+1234555890");
+// deleteHotelByPhoneNumber("+1234555890");
+
+app.listen(3000, () => {
+  console.log(`Server is running at port 3000`);
+});
