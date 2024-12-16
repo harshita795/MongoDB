@@ -45,6 +45,71 @@ app.get("/recipes", async (req, res) => {
   }
 });
 
+async function getRecipeByTitle(recipeTitle) {
+  try {
+    const recipeByTitle = await Recipe.findOne({ title: recipeTitle });
+    return recipeByTitle;
+  } catch (error) {
+    console.error(`Error: `, error);
+  }
+}
+
+app.get("/recipes/recipeTitle/:recipeTitle", async (req, res) => {
+  try {
+    const recipeTitle = req.params.recipeTitle;
+    const response = await getRecipeByTitle(recipeTitle);
+    return res
+      .status(200)
+      .json({ message: "Recipe by title: ", recipe: response });
+  } catch (error) {
+    return res.status(500).json({ error: "Error in fetching recipe." });
+  }
+});
+
+async function getRecipeByAuthor(recipeAuthor) {
+  try {
+    const recipeByAuthor = await Recipe.findOne({ author: recipeAuthor });
+    return recipeByAuthor;
+  } catch (error) {
+    console.error(`Error: `, error);
+  }
+}
+
+app.get("/recipes/recipeAuthor/:recipeAuthor", async (req, res) => {
+  try {
+    const recipeAuthor = req.params.recipeAuthor;
+    const response = await getRecipeByAuthor(recipeAuthor);
+    return res
+      .status(200)
+      .json({ message: "Recipe by Author: ", recipe: response });
+  } catch (error) {
+    return res.status(500).json({ error: "Error in fetching recipe." });
+  }
+});
+
+async function getRecipeByDifficultyLevel(recipeDifficulty) {
+  try {
+    const recipeByDifficultyLevel = await Recipe.findOne({
+      difficulty: recipeDifficulty,
+    });
+    return recipeByDifficultyLevel;
+  } catch (error) {
+    console.error(`Error: `, error);
+  }
+}
+
+app.get("/recipes/recipeDifficulty/:recipeDifficulty", async (req, res) => {
+  try {
+    const recipeDifficulty = req.params.recipeDifficulty;
+    const response = await getRecipeByDifficultyLevel(recipeDifficulty);
+    return res
+      .status(200)
+      .json({ message: "Recipe by difficulty level: ", recipe: response });
+  } catch (error) {
+    return res.status(500).json({ error: "Error in fetching recipe." });
+  }
+});
+
 app.listen(3000, () => {
   console.log(`Server is running at port 3000`);
 });
