@@ -110,6 +110,90 @@ app.get("/recipes/recipeDifficulty/:recipeDifficulty", async (req, res) => {
   }
 });
 
+async function updateRecipeById(recipeId, dataToUpdate) {
+  try {
+    const updatedRecipe = await Recipe.findByIdAndUpdate(
+      recipeId,
+      dataToUpdate,
+      { new: true }
+    );
+    return updatedRecipe;
+  } catch (error) {
+    console.error(`Error: `, error);
+  }
+}
+
+app.post("/recipes/update/:id", async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    const updatedData = req.body;
+    const response = await updateRecipeById(recipeId, updatedData);
+
+    if (!response) {
+      return res.status(400).json({ error: "Recipe not found." });
+    }
+
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Error in updating recipe." });
+  }
+});
+
+async function updateRecipeByTitle(recipeTitle, dataToUpdate) {
+  try {
+    const updatedRecipe = await Recipe.findOneAndUpdate(
+      { title: recipeTitle },
+      dataToUpdate,
+      { new: true }
+    );
+    return updatedRecipe;
+  } catch (error) {
+    console.error(`Error: `, error);
+  }
+}
+
+app.post("/recipes/updateByTitle/:title", async (req, res) => {
+  try {
+    const recipeTitle = req.params.title;
+    const updatedData = req.body;
+    const response = await updateRecipeByTitle(recipeTitle, updatedData);
+
+    if (!response) {
+      return res.status(400).json({ error: "Recipe not found." });
+    }
+
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: "Error in updating recipe." });
+  }
+});
+
+async function deleteRecipeById(recipeId) {
+  try {
+    const deletedRecipe = await Recipe.findByIdAndDelete(recipeId);
+    return deletedRecipe;
+  } catch (error) {
+    console.error(`Error: `, error);
+  }
+}
+
+app.post("/recipes/delete/:id", async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    const response = await deleteRecipeById(recipeId);
+
+    if (!response) {
+      return res.status(400).json({ error: "Recipe not found." });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Recipe deleted successfully", response });
+  } catch (error) {
+    return res.status(500).json({ error: "Error in deleting recipe." });
+  }
+});
+
 app.listen(3000, () => {
   console.log(`Server is running at port 3000`);
 });
